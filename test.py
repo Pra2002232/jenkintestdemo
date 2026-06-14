@@ -1,1 +1,1 @@
-echo "Hello word"
+print ("wassup buddy!! v6")
