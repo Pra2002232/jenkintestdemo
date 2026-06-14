@@ -1,1 +1,1 @@
-print ("wassup buddy!! v8")
+prin ("wassup buddy!! v8")
