@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Booking</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css"/>
+<script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+</head>
+<script>
+// Wait for page load
+document.addEventListener("DOMContentLoaded", function () {
+
+    // Initialize Map AFTER DOM loads
+    window.map = L.map('map').setView([19.0760, 72.8777], 10);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
+    .addTo(map);
+
+    window.routingControl = null;
+});
+
+// Get coordinates
+async function getCoordinates(place) {
+    let url = `https://nominatim.openstreetmap.org/search?format=json&q=${place}`;
+    let res = await fetch(url);
+    let data = await res.json();
+
+    if (data.length === 0) return null;
+
+    return [parseFloat(data[0].lat), parseFloat(data[0].lon)];
+}
+
+// Live location
+function getLiveLocation() {
+    navigator.geolocation.getCurrentPosition(pos => {
+
+        let lat = pos.coords.latitude;
+        let lon = pos.coords.longitude;
+
+        map.setView([lat, lon], 15);
+
+        L.marker([lat, lon]).addTo(map)
+            .bindPopup("You are here")
+            .openPopup();
+
+        document.getElementById("pickup").value = lat + "," + lon;
+    });
+}
+
+// Fare calculation
+function calculateFare(distance, type) {
+    let rates = {
+        "Maruti Suzuki Ertiga": 14,
+        "SUV": 14
+    };
+
+    return distance * (rates[type] || 14);
+}
+
+// MAIN FUNCTION (IMPORTANT FIX)
+async function calculateDistance() {
+
+    let pickup = document.getElementById("pickup").value;
+    let drop = document.getElementById("drop").value;
+    let carType = document.querySelector("select[name='car']").value;
+
+    if (!pickup || !drop) {
+        alert("Enter locations");
+        return;
+    }
+	
+	let p = await getCoordinates(pickup);
+    let d = await getCoordinates(drop);
+	
+    if (!p || !d) {
+        alert("Invalid location");
+        return;
+    }
+
+    // Remove old route
+    if (window.routingControl) {
+        map.removeControl(window.routingControl);
+    }
+
+    // Create new route
+    window.routingControl = L.Routing.control({
+        waypoints: [
+            L.latLng(p[0], p[1]),
+            L.latLng(d[0], d[1])
+        ]
+    }).on('routesfound', function(e) {
+
+        let route = e.routes[0];
+
+        let distance = route.summary.totalDistance / 1000; // KM
+        let fare = calculateFare(distance, carType);
+
+        // Update UI
+        document.getElementById("showDistance").innerText = distance.toFixed(2) + " KM";
+        document.getElementById("showPrice").innerText = "₹" + fare.toFixed(2);
+
+        document.getElementById("resultBox").style.display = "block";
+
+        // IMPORTANT: send to PHP (hidden fields)
+        document.getElementById("distance").value = distance.toFixed(2);
+        document.getElementById("price").value = fare.toFixed(2);
+
+    }).addTo(map);
+}
+
+</script>
+
+<header>
+    <h1>Car Booking</h1>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="packages.html">Car's</a>
+        <a href="booking.html">Booking</a>
+        <a href="contact.html">Contact</a>
+	<a href="about.html">About</a>
+	<a href="terms.html">Terms</a>
+    </nav>
+</header>
+<div class="main-container">
+
+    <!-- LEFT SIDE (Booking Form) -->
+    <section class="booking-wrapper">
+        <div class="booking-card">
+
+            <h2>🚗 Book Your Ride</h2>
+            <p>Plan your journey with comfort & style</p>
+
+            <form class="booking-form" action="book.php" method="POST">
+
+                <div class="row" style="position:relative;">
+                    <input type="text" id="pickup" name="pickup" placeholder="Pickup Location" onkeyup="searchLocation(this.value, 'pickupList')" required>
+					<div id="pickupList" class="suggestions"></div>
+                    <input type="text" id="drop" name="drop" placeholder="Drop Location" onkeyup="searchLocation(this.value, 'dropList')" required>
+					<div id="dropList" class="suggestions"></div>
+                    <input type="hidden" id="distance" name="distance">
+                    <input type="hidden" id="price" name="price">
+                </div>
+
+                <div class="row">
+                    <input type="date" name="pdate" required>
+                    <input type="date" name="ddate" required>
+                </div>
+
+                <div class="row">
+                    <div style="display:flex; gap:5px; width:100%;">
+                        <input type="time" name="ptime" required>
+                        <select name="pampm">
+                            <option>AM</option>
+                            <option>PM</option>
+                        </select>
+                    </div>
+
+                    <div style="display:flex; gap:5px; width:100%;">
+                        <input type="time" name="dtime" required>
+                        <select name="dampm">
+                            <option>AM</option>
+                            <option>PM</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="result-box" id="resultBox" style="display:none;">
+                    <div class="result-item">
+                        <span>📍 Distance:</span>
+                        <strong id="showDistance">0 KM</strong>
+                    </div>
+
+                    <div class="result-item">
+                        <span>💰 Price:</span>
+                        <strong id="showPrice">₹0</strong>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <select name="car" required>
+                        <option>Select Car</option>
+                        <option>Maruti Suzuki Ertiga</option>
+                        <option>SUV</option>
+                    </select>
+                </div>
+
+                <button type="button" onclick="calculateDistance()">Calculate Price</button>
+                <button class="book-btn">🚀 Book Now</button>
+
+            </form>
+        </div>
+    </section>
+
+    <!-- RIGHT SIDE (MAP) -->
+    <div id="map"></div>
+
+</div>
+<script>
+
+function bookCar(e){
+    e.preventDefault();
+    document.getElementById("message").innerHTML="Booking Confirmed ✅";
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,531 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+}
+
+/* HEADER */
+header {
+    background: linear-gradient(to right, #0077b6, #00b4d8);
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+nav a {
+    color: white;
+    margin: 15px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* HERO */
+.hero {
+    background: url('images/travel.jpg') no-repeat center/cover;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* Dark overlay */
+.hero::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+/* Content */
+.hero-content {
+    position: relative;
+    text-align: center;
+    color: white;
+    max-width: 700px;
+}
+
+.hero-content h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.hero-content h2 {
+    font-size: 24px;
+    color: #00b4d8;
+}
+
+.hero-content p {
+    margin: 15px 0;
+    font-size: 16px;
+}
+
+.hero-content {
+    animation: fadeUp 1s ease;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/* Button */
+.btn {
+    background: #00b4d8;
+    color: white;
+    padding: 10px 25px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    background: #0077b6;
+}
+/* COMMON */
+.section-title {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 28px;
+}
+
+/* PREMIUM SECTION */
+.premium-section {
+    padding: 60px 20px;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: white;
+}
+
+/* FEATURE GRID */
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+/* CARD */
+.feature-card {
+    background: rgba(255,255,255,0.1);
+    padding: 20px;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    transition: 0.3s;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    background: rgba(255,255,255,0.2);
+}
+
+/* TESTIMONIALS */
+.testimonials-modern {
+    padding: 60px 20px;
+    background: #f4f6f9;
+}
+
+.reviews {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.review-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 250px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* FAQ */
+.faq-modern {
+    padding: 60px 20px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+}
+
+.faq-box {
+    background: rgba(255,255,255,0.1);
+    padding: 15px;
+    margin: 10px auto;
+    border-radius: 8px;
+    max-width: 600px;
+}
+/* ABOUT */
+.about-modern {
+    padding: 80px 20px;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: white;
+}
+
+/* HEADER */
+.about-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.about-header h1 {
+    font-size: 36px;
+}
+
+.about-header p {
+    color: #ccc;
+}
+
+/* LAYOUT */
+.about-container {
+    display: flex;
+    max-width: 1100px;
+    margin: auto;
+    gap: 40px;
+    align-items: center;
+}
+
+/* LEFT */
+.about-left {
+    flex: 1;
+}
+
+.about-left p {
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+/* BUTTON */
+.about-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #ff416c;
+    border-radius: 5px;
+    color: white;
+    text-decoration: none;
+}
+
+/* RIGHT GRID */
+.about-right {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+/* CARD */
+.card {
+    background: rgba(255,255,255,0.1);
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    backdrop-filter: blur(8px);
+    transition: 0.3s;
+}
+
+.card span {
+    font-size: 30px;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    background: rgba(255,255,255,0.2);
+}
+
+/* PACKAGES */
+.cars-section {
+    padding: 60px 20px;
+    text-align: center;
+    background: linear-gradient(135deg, #0f2027, #2c5364, #00c6ff);
+}
+
+/* TITLE */
+.cars-section h1 {
+    font-size: 32px;
+}
+
+.cars-section h1 span {
+    color: white;
+}
+
+.subtitle {
+    color: #ccc;
+    margin-bottom: 40px;
+}
+
+/* CONTAINER */
+.cars-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+/* CARD */
+.car-card {
+    width: 320px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    padding-bottom: 20px;
+    transition: 0.3s;
+}
+
+.car-card img {
+    width: 100%;
+    border-radius: 10px 10px 0 0;
+}
+
+.car-card h3 {
+    margin: 15px 0;
+}
+
+.car-card ul {
+    text-align: left;
+    padding: 0 20px;
+    color: #555;
+}
+
+/* BUTTON */
+.car-btn {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 25px;
+    background: red;
+    color: white;
+    border-radius: 30px;
+    text-decoration: none;
+}
+
+.car-btn:hover {
+    background: darkred;
+    transform: scale(1.05);
+}
+
+/* HOVER EFFECT */
+.car-card:hover {
+    transform: translateY(-10px);
+}
+
+/* CONTACT */
+.contact-modern {
+    padding: 80px 20px;
+    background: linear-gradient(135deg, #141e30, #243b55);
+    color: white;
+}
+
+/* CONTAINER */
+.contact-container {
+    max-width: 1100px;
+    margin: auto;
+    display: flex;
+    gap: 40px;
+    align-items: center;
+}
+
+/* LEFT */
+.contact-info {
+    flex: 1;
+}
+
+.contact-info h2 {
+    font-size: 32px;
+    margin-bottom: 15px;
+}
+
+.contact-info p {
+    margin-bottom: 20px;
+}
+
+/* INFO BOX */
+.info-box {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    align-items: center;
+}
+
+/* RIGHT FORM */
+.contact-form {
+    flex: 1;
+    background: rgba(255,255,255,0.1);
+    padding: 30px;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+}
+
+.contact-form h3 {
+    margin-bottom: 15px;
+}
+
+/* INPUTS */
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+}
+
+/* BUTTON */
+.contact-form button {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(45deg, #ff416c, #ff4b2b);
+    border: none;
+    border-radius: 30px;
+    color: white;
+    cursor: pointer;
+}
+
+.contact-form button:hover {
+    transform: scale(1.05);
+}
+
+/* BOOKING */
+/* BACKGROUND */
+.booking-wrapper {
+    display: flex;
+    justify-content: center;   /* horizontal center */
+    align-items: center;       /* vertical center */
+    min-height: calc(100vh - 120px); /* adjust based on header height */
+
+    background: linear-gradient(135deg, #0f2027, #2c5364, #00c6ff);
+}
+
+/* CARD */
+.booking-card {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    width: 450px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+/* TEXT */
+.booking-card h2 {
+    margin-bottom: 10px;
+}
+
+.booking-card p {
+    color: gray;
+    margin-bottom: 20px;
+}
+
+/* FORM */
+.booking-form .row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.booking-form input,
+.booking-form select {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+/* BUTTON */
+.book-btn {
+    width: 200px;
+    padding: 12px;
+    background: linear-gradient(45deg, #ff416c, #ff4b2b);
+    border: none;
+    border-radius: 30px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px auto;
+}
+
+.book-btn:hover {
+    transform: scale(1.05);
+}
+.main-container {
+    display: flex;
+    height: calc(100vh - 60px); /* full screen minus header */;
+}
+
+/* LEFT SIDE */
+.booking-wrapper {
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #1e3c72;
+}
+
+/* Booking card */
+.booking-card {
+    width: 90%;
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+/* RIGHT SIDE MAP */
+#map {
+    width: 60%;
+    height: 100%;
+}
+
+.rules-section {
+    padding: 60px 20px;
+    background: linear-gradient(135deg, #141e30, #243b55);
+    color: white;
+    text-align: center;
+}
+
+.rules-section h2 {
+    margin-bottom: 30px;
+    font-size: 30px;
+}
+
+.rules-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+/* CARD */
+.rule {
+    background: rgba(255,255,255,0.1);
+    padding: 20px;
+    border-radius: 10px;
+    backdrop-filter: blur(8px);
+    transition: 0.3s;
+}
+
+.rule:hover {
+    transform: translateY(-8px);
+    background: rgba(255,255,255,0.2);
+}
+
+.rule h3 {
+    margin-bottom: 10px;
+}
+
+.result-box {
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from {opacity:0; transform: translateY(10px);}
+    to {opacity:1; transform: translateY(0);}
+}
+/* FOOTER */
+footer {
+    background: #141e30;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
